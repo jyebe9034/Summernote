@@ -1,0 +1,7 @@
+.classpath
+.project
+.settings
+*.mp4
+*.class
+/build/
+MANIFEST.MF
