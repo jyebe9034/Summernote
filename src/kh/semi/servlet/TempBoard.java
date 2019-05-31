@@ -40,6 +40,8 @@ public class TempBoard extends HttpServlet {
 		BoardDAO dao = new BoardDAO();
 
 		if(cmd.equals("/writer.temp")) {
+			request.getSession().setAttribute("flag", "true");
+			
 			TempDTO tdto = new TempDTO();
 			int maxSize = 10 * 1024 * 1024;
 
@@ -71,12 +73,7 @@ public class TempBoard extends HttpServlet {
 			try {
 				MultipartRequest multi = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 				
-				
-				File errorFile = new File(multi.getFilesystemName("files"));
-				
-				
 				uploadFile = multi.getFilesystemName("filename");
-				System.out.println(uploadFile);
 				newFileName = currentTime + "." + uploadFile.substring(uploadFile.lastIndexOf(".")+1);
 				tdto.setFileName(newFileName);
 
@@ -92,9 +89,6 @@ public class TempBoard extends HttpServlet {
 
 					dos.write(fileContents);
 					dos.flush();
-					
-					System.out.println("-");
-
 					dos.close();
 					dis.close();
 					oldFile.delete();
@@ -113,15 +107,18 @@ public class TempBoard extends HttpServlet {
 				dto.setContents(multi.getParameter("contents"));
 				try {
 					int result = dao.insertBoard(dto);
+					System.out.println("result : "+result);
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
-				//				dao.insertTitleImg(tdto);
+				int result = dao.insertTitleImg(tdto);
+				System.out.println("titleresult : " + result);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}else if(cmd.equals("/uploadImage.temp")) {
-			request.getSession().setAttribute("flag", "true");
+			request.getSession().setAttribute("flag", "false");
+			
 			TempDTO tdto = new TempDTO();
 			int maxSize = 10 * 1024 * 1024;
 
@@ -152,9 +149,7 @@ public class TempBoard extends HttpServlet {
 			try {
 				MultipartRequest multi = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());				
 				uploadFile = multi.getFilesystemName("file");
-				System.out.println("uploadFile" + " : " + uploadFile);
 				newFileName = currentTime + "." + uploadFile.substring(uploadFile.lastIndexOf(".")+1);
-				System.out.println("newFileName" + " : " + newFileName);
 				tdto.setFileName(newFileName);
 
 				File oldFile = new File(savePath + "/" + uploadFile);
@@ -169,7 +164,6 @@ public class TempBoard extends HttpServlet {
 
 					dos.write(fileContents);
 					dos.flush();
-
 					dos.close();
 					dis.close();
 					oldFile.delete();
@@ -189,11 +183,11 @@ public class TempBoard extends HttpServlet {
 			}
 
 			String test = (String)request.getSession().getAttribute("flag");
-			System.out.println(test);
+			System.out.println("test : " + test);
 			if(test.equals("false")) {
 				String rootPath = this.getServletContext().getRealPath("/");
 				String fileUrl = request.getParameter("src");
-				System.out.println(fileUrl);
+				System.out.println("fileUrl : " + fileUrl);
 				String filePath = null;
 				if(fileUrl.startsWith("http")) {
 					filePath = fileUrl.replaceAll("http://.+?/", "");
@@ -202,6 +196,7 @@ public class TempBoard extends HttpServlet {
 				}
 				boolean deleteFile = new File(rootPath+filePath).delete();
 				pw.print(deleteFile);
+				System.out.println("delefeFile : " + deleteFile);
 			}
 			request.getSession().setAttribute("flag", "false");
 		}

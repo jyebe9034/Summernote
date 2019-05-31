@@ -193,17 +193,20 @@
 	<div id="footer"></div>
 	
 	<script>
-// 		$(window).on("beforeunload", function(){
-// 	    	$("img").each(function(index, item){
-// 	    		var src = $(this).attr("src");
-// 	    		$.ajax({
-// 					url: "deleteImage.temp",
-// 					data: {src : src},
-// 					type: "POST",
-// 					cache: false
-// 				})
-// 	    	})
-// 	    });
+		$(window).on("beforeunload", function(){
+	    	$("img").each(function(index, item){
+	    		var src = $(this).attr("src");
+	    		if(src == "foryou.jpg"){	
+	    		}else{
+	    			$.ajax({
+						url: "deleteImage.temp",
+						data: {src : src},
+						type: "POST",
+						cache: false
+					})	
+	    		}
+	    	})
+	    });
 	
 		$("#sendit").on("click", function(){
 	        $("#mycontent").val($(".note-editable").html());
@@ -240,25 +243,27 @@
 	        	enctype: "multipart/form-data",
 	        	processData: false
 	        }).done(function(resp){
-	        	console.log(resp.url);
 	        	$(".note-editable").append("<img src='"+resp+"'>");
 	        })
         }
         
         function deleteFile(src) {
-            $.ajax({
-                data: {src : src},
-                type: "POST",
-                url: "deleteImage.temp", // replace with your url
-                cache: false,
-                success: function(resp) {
-                	if(resp == "true"){
-                		console.log("정상 삭제");
-                	}else{
-                		console.log("삭제 실패");	
-                	}
-                }
-            });
+        	if(src == "foryou.jpg"){
+        	}else{
+        		$.ajax({
+                    data: {src : src},
+                    type: "POST",
+                    url: "deleteImage.temp", // replace with your url
+                    cache: false,
+                    success: function(resp) {
+                    	if(resp == "true"){
+                    		console.log("정상 삭제");
+                    	}else{
+                    		console.log("삭제 실패");	
+                    	}
+                    }
+                });	
+        	}
         }
         
         $("#cancel").on("click", function(){
