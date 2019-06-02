@@ -24,6 +24,28 @@
 		height: 100%;
 		text-align: center;
 	}
+	div{
+        box-sizing: border-box;
+    }
+	nav{
+		position: relative;
+		height: 60px;
+	}
+	.logo{
+		position: absolute;
+		top: 10%;
+		left: 15%;
+	}
+	#navbarNav{
+		position: relative;
+		top: 30%;
+		left: 50%;
+	}
+	#toggle{
+		position: absolute;
+		top: 30%;
+		right: 5%;
+	}
 	.progress{
 		width: 200px;
 	}
@@ -39,15 +61,8 @@
 	.anker:hover{
 		color: #000000;
 	}
-	.nav-ul{
-		margin-left: 300px;
-	}
 	.nav-li{
 		width: 130px;
-	}
-	#blank{
-		display: inline-block;
-		width: 200px;
 	}
 	#image{
 		max-height: 700px;
@@ -84,15 +99,74 @@
         position: relative;
         margin-top: 30px;
 	}
+	#f_logo{
+		color: #98ddde;
+        text-decoration: none;
+	}
+	#f_logo_wrap{
+        position: absolute;
+        left: 15%;
+        top: 20%;
+        
+	}
+	#f_info_wrap{
+		position: absolute;
+		right: 15%;
+		top: 20%;
+	}
+	#f_info{
+		color: gray;
+		text-align: right;
+		font-size: 13px;
+		float: left;
+		padding-top: 5px;
+		margin-right: 10px;
+	}
+	#suggest{
+		display: inline-block;
+		background-color: #fa7268;
+		border-radius: 80%;
+		color: white; 
+		width: 100px;
+		height: 45px;
+		text-decoration: none;
+		line-height: 50px;
+		float: left;
+	}
+	#f_sns{
+		position: absolute;
+		right: 15%;
+		top: 47%;
+	}
+	.sns{
+		width: 30px;
+		height: 30px;
+		margin: 3px;
+	}
+	#kakao{
+		width: 40px;
+		height: 40px;
+	}
+	#insta{
+		width: 32px;
+		height: 32px;
+		margin-left: 8px;
+	}
+	#copyright{
+		color: gray;
+		position: absolute;
+		right: 15%;
+		top: 70%;
+		font-size: 13px;
+	}
 </style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-md navbar-light navbar-fixed-top">
-		<div id="blank"></div>
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
+		<button id="toggle" class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -126,7 +200,7 @@
 	<div id="wrapper">	
 		<form action="writer.temp" method="post" id="myform" enctype="multipart/form-data" accept-charset="UTF-8">
 			<div class="form-group">
-				<div class="noti mb-2">제목은 한눈에 쏙 들어오게!</div> 
+				<div class="noti mb-2">제목은 한눈에 쏙 들어오게!</div>
 				<input type="text" class="form-control" name="title" placeholder="제목을 입력해 주세요 :)" required>
 			</div>
 			<div class="form-group"> 
@@ -150,47 +224,59 @@
 			</div>
 			<div class="form-group">
 				<div class="input-group mb-3">
-				  <div class="input-group-prepend">
-				    <label class="mt-1 mr-2 noti">후원받을 계좌는 본인 계좌로!(본인계좌가 아니면 모금이 불가능합니다.)</label>
-				  </div>
-				  <select class="custom-select" name="select">
-				    <option value="신한" selected>신한</option>
-					<option value="국민">국민</option>
-					<option value="농협">농협</option>
-					<option value="우리">우리</option>
-					<option value="기업">기업</option>
-					<option value="하나">하나</option>
-					<option value="부산">부산</option>
-					<option value="경남">경남</option>
-					<option value="SC">SC</option>
-					<option value="수협">수협</option>
-					<option value="우체국">우체국</option>
-				  </select>
+					<div class="input-group-prepend">
+						<label class="mt-1 mr-2 noti">후원받을 계좌는 본인 계좌로!(본인계좌가 아니면 모금이 불가능합니다.)</label>
+					</div>
+				    <select class="custom-select" name="select">
+					    <option value="신한" selected>신한</option>
+						<option value="국민">국민</option>
+						<option value="농협">농협</option>
+						<option value="우리">우리</option>
+						<option value="기업">기업</option>
+						<option value="하나">하나</option>
+						<option value="부산">부산</option>
+						<option value="경남">경남</option>
+						<option value="SC">SC</option>
+						<option value="수협">수협</option>
+						<option value="우체국">우체국</option>
+				    </select>
 				</div>
 				<input type="text" class="form-control m-0" name="account" placeholder="계좌번호 '-' 제외하고 입력" required>
 			</div>
-			<div class="form-group">
-				<div class="mb-2 noti">내용을 자유롭게 작성해 주세요 :) 사진을 추가로 올리는 것도 가능합니다.</div>
+			<div class="form-group row">
+				<div class="mb-2 noti col">내용을 자유롭게 작성해 주세요 :) 사진을 추가로 올리는 것도 가능합니다.</div>
 			</div>
-			<div class="row">
-				<div id="content" class="col-12">
+			<div id="content" class="row">	
+				<div class="col">
 					<div id="summernote" contenteditable="true"></div>
 					<input id="mycontent" type="hidden" name="contents">
 				</div>
 			</div>
-			<div id="all-btns" class="row">
-				<div class="col-12">
-					<div class="btns">
-						<input type="button" id="sendit" class="btn btn-sm btn-outline-primary" value="등록">
-					</div>
-					<div class="btns">
-						<input type="button" id="cancel" class="btn btn-sm btn-outline-primary" value="취소">
-					</div>
+			<div id="all-btns">
+				<div class="btns">
+					<input type="button" id="sendit" class="btn btn-sm btn-outline-primary" value="등록">
+				</div>
+				<div class="btns">
+					<input type="button" id="cancel" class="btn btn-sm btn-outline-primary" value="취소">
 				</div>
 			</div>
 		</form>
 	</div>
-	<div id="footer"></div>
+	<div id="footer">
+		<div id="f_logo_wrap">
+			<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+		</div>
+		<div id="f_info_wrap">
+			<div id="f_info">행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.</div>
+			<a href="/"><div id="suggest">후원 신청</div></a>
+		</div>
+		<div id="f_sns">
+			<img id="kakao" class="sns" src="ka.png">
+			<img class="sns" src="fa.png">
+			<img id="insta" class="sns" src="kk.png">
+		</div>
+		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
+	</div>
 	
 	<script>
 		$(window).on("beforeunload", function(){
